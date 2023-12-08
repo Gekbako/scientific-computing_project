@@ -1,4 +1,4 @@
 program main
   implicit none
-  !ola first commit
+  !ola first comit
 end program main
