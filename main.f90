@@ -1,3 +1,3 @@
 program main
 
-endprogram main
+end program main
