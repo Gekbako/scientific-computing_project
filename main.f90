@@ -2,8 +2,9 @@ program main
    use particle
    implicit none
 
-   real :: q,m,E(3),B(3), E_value, B_value, x_i, v_i
-   real :: a(3),c(3)
+   ! define variables
+   type(par) :: p
+   real :: E(3),B(3),E_value, B_value
    real :: dt
    integer :: time, iostatus,i
    logical :: input_validation=.TRUE.
@@ -24,9 +25,10 @@ program main
       end if
    end do
 
-   ! reading the values of E,Bm,g,x_initial,v_initial from the file
+   ! reading the values of E, B, m, q from the file
    open(unit=10,file='data.dat',status='old', action='read')
-   do i=1,6
+
+   do i=1,4
       read(10,'(A)') values(i)
    end do
 
@@ -35,16 +37,27 @@ program main
    ! change strings to real numbers
    read(values(1)(5:),*) E_value
    read(values(2)(5:),*) B_value
-   read(values(3)(5:),*) m
-   read(values(4)(5:),*) q
-   read(values(5)(5:),*) x_i
-   read(values(6)(5:),*) v_i
-   
-   ! previous update
-   a = [1.,0.,0.]
-   b = [0.,0.,1.]
-   !function calls
-   print *, cProd(b,a)
+   read(values(3)(5:),*) p%m
+   read(values(4)(5:),*) p%q
 
+   ! set values of initial position and initial velocity (think of reading x,v,a from the file)
+   p%pos = [0.00000000001,1.0,1.0] !assuming we DONT start from origin of the coordinate system k(otherwise E=0 and no movement appears)
+   p%v = [0,0,0] !assuming no initial velocity
+   p%a = [0,0,0] !assuming no initial acceleration
+
+   ! initial set E and B vectors
+   E = -E_value*p%pos !we assume the E always go to the center so that E vector is always the negative of position
+   B = B_value*[0,0,1]
+
+   ! the time step 
+   do i=1,time 
+      call step(p,E,B)
+      E = -E_value*p%pos
+      if (mod(i,1000000)==0) then
+         write(*,*) 'Position:',p%pos,'E:',E ! the input time must be quite large to notice change of position and E
+      end if
+
+   end do
+   
 end program main
 
