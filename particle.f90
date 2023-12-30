@@ -1,18 +1,11 @@
 module particle
    implicit none
    type :: par
-      real :: m,pos(3),v(3),a(3)
+      real :: q,m,f(3),pos(3),v(3),a(3) ! I added q and f(3) 
    end type par
 contains
-   subroutine step(p,f)
-      type (par), intent(inout) :: p
-      real, intent(in) ::  f(3)
-
-      p%a = f/p%m
-      p%v = p%v + p%a*1e-10
-      p%pos = p%pos + p%v*1e-10
-   end subroutine step
-
+   ! small change of order
+   
    function cProd(v1,v2) result(retval)
       real, intent(in) :: v1(3),v2(3)
       real :: retval(3)
@@ -23,4 +16,17 @@ contains
       return
    end function cProd
 
+   subroutine step(p,E,B)
+      type (par), intent(inout) :: p
+      real, dimension(3), intent(inout) :: E,B 
+
+      p%f = p%q*(E+cProd(p%v,B)) ! I add f to subroutine since it has to be calculated everytime anyway
+      p%a = p%f/p%m
+      p%v = p%v + p%a*1e-10
+      p%pos = p%pos + p%v*1e-10
+      
+
+   end subroutine step
+
 end module particle
+
