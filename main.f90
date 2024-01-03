@@ -70,6 +70,20 @@ program main
    !---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
    ! PART 2 -------------------------------------------------------------------------------------------------------------------------------------------------------
+   ! ask user for the time of the measurement (ask for integer, number of miliseconds)
+   !write(*,'(A)') 'Please provide the time of the measurment in miliseconds as an integer:'
+
+   ! this checks if the user gave valid input and asks for new if it is not right
+   !do while (input_validation)
+      !read(*,*,iostat=iostatus) time
+
+      !if (iostatus /= 0) then
+         !write(*,'(A)') 'Invalid input. Please enter an integer.'
+      !else
+         !input_validation=.FALSE.
+      !end if
+   !end do
+
    ! set initial values
    !p%pos = [1.5,0.,0.] ! we strat from the top of magnet (look task description)
    !p%v = [0.,-sqrt(2*1.9226119608e-12/p%m),0.] ! assuming K=12MeV
