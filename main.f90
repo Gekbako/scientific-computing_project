@@ -4,7 +4,7 @@ program main
 
    ! define variables
    type(par) :: p
-   real :: E(3),B(3),E_value, B_value,n
+   real :: E(3),B(3),E_value, B_value,n,v(3),velocity
    real :: dt
    integer :: time, iostatus,i
    logical :: input_validation=.TRUE., s=.TRUE.
