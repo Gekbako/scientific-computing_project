@@ -103,17 +103,17 @@ program main
    !---------------------------------------------------------------------------------------------------------------------------------------------------------------
    
    ! PART 3 -------------------------------------------------------------------------------------------------------------------------------------------------------
-   ! set initial values
+   ! set initial variables
    p%pos = [0.0,-1.5,0.0] !we start from the last positon from magnet in part 4
    velocity=sqrt(2*12*1e6*1.6022*1e-19/p%m) ! velocity in x direction from K (in part 4 it must be final v of magnet)
    p%v = [-velocity,0.0,0.0] !assuming initial velocity such that K=12 MeV
    p%a = [0.,0.,0.] !assuming no initial acceleration
 
    ! set initial E and B vectors
-   B = B_value*[0,0,1]
+   B = [0,0,0] ! outside the magnet
    E = E_value*([0.0,-2.7,0.0]-p%pos)/(sqrt(sum([0.0,-2.7,0.0]-p%pos)**2))
 
-   ! filter values 
+   ! set other variables
    n=0.523598776 ! 30 deg
    v=([0.0,-2.7,0.0]-p%pos) !vector from position to the centre of filter
 
