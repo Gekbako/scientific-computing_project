@@ -1,7 +1,10 @@
 E = 5367499.0862869
-B = 0
+B = 0.4147408125
 m = 2.325294627e-26
 q = 4.806e-19
 E_toolow = 60000
 E_good = 6667499.0862869 (computed) / 5367499.0862869 (found)
 E_toohigh = 8000000
+m_min = 2.32528169E-26
+m_max = 2.32530757E-26
+m_part2/3=2.325294627e-26 (was used in finding min and max as p%m)
