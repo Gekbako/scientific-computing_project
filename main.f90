@@ -4,10 +4,10 @@ program main
 
    ! define variables
    type(par) :: p
-   real :: E(3),B(3),E_value, B_value,n,v(3),velocity
+   real :: E(3),B(3),E_value, B_value,n,v(3),velocity,m_min,m_max
    real :: dt
    integer :: time, iostatus,i
-   logical :: input_validation=.TRUE., s=.TRUE.
+   logical :: input_validation=.TRUE., s=.TRUE., ms=.TRUE.
    character(30), dimension(6) :: values
    dt = 1e-10 !timestep
    
@@ -118,38 +118,115 @@ program main
    
    ! PART 3 -------------------------------------------------------------------------------------------------------------------------------------------------------
    ! set initial variables
-   p%pos = [0.0,-1.5,0.0] !we start from the last positon from magnet in part 4
-   velocity=sqrt(2*12*1e6*1.6022*1e-19/p%m) ! velocity in x direction from K (in part 4 it must be final v of magnet)
-   p%v = [-velocity,0.0,0.0] !assuming initial velocity such that K=12 MeV
-   p%a = [0.,0.,0.] !assuming no initial acceleration
+   !p%pos = [0.0,-1.5,0.0] !we start from the last positon from magnet in part 4
+   !velocity=sqrt(2*12*1e6*1.6022*1e-19/p%m) ! velocity in x direction from K (in part 4 it must be final v of magnet)
+   !p%v = [-velocity,0.0,0.0] !assuming initial velocity such that K=12 MeV
+   !p%a = [0.,0.,0.] !assuming no initial acceleration
 
    ! set initial E and B vectors
-   B = [0,0,0] ! outside the magnet
-   E = E_value*([0.0,-2.7,0.0]-p%pos)/(sqrt(sum([0.0,-2.7,0.0]-p%pos)**2))
+   !B = [0,0,0] ! outside the magnet
+   !E = E_value*([0.0,-2.7,0.0]-p%pos)/(sqrt(sum([0.0,-2.7,0.0]-p%pos)**2))
 
    ! set other variables
-   n=0.523598776 ! 30 deg
-   v=([0.0,-2.7,0.0]-p%pos) !vector from position to the centre of filter
+   !n=0.523598776 ! 30 deg
+   !v=([0.0,-2.7,0.0]-p%pos) !vector from position to the centre of filter
 
    ! time step and saving the data
-   open(unit=10, file='data2.dat', status='replace', action='write') !change to file 1 or 3 depending on which E you try 1 too low, 2 good, 3 too high
-   do while (s)
-      write(10,*) p%pos(1),';',p%pos(2) ! save data
-      call step(p,E,B) ! step
-      v=([0.0,-2.7,0.0]-p%pos) ! change of vector
-      E = E_value*v/(sqrt(sum(v)**2)) ! change of electric field depending on vector
+   !open(unit=10, file='data2.dat', status='replace', action='write') !change to file 1 or 3 depending on which E you try 1 too low, 2 good, 3 too high
+   !do while (s)
+      !write(10,*) p%pos(1),';',p%pos(2) ! save data
+      !call step(p,E,B) ! step
+      !v=([0.0,-2.7,0.0]-p%pos) ! change of vector
+      !E = E_value*v/(sqrt(sum(v)**2)) ! change of electric field depending on vector
       
-      if (norm2(v)>=1.21 .or. norm2(v)<=1.19 .or. atan(v(1)/(-v(2)))<0) then ! hits the walls
-         s=.FALSE.
-         write(*,*) 'Particle hit wall.'
-         write(10,*) p%pos(1),';',p%pos(2) ! save final position
+      !if (norm2(v)>=1.21 .or. norm2(v)<=1.19 .or. atan(v(1)/(-v(2)))<0) then ! hits the walls
+         !s=.FALSE.
+         !write(*,*) 'Particle hit wall.'
+         !write(10,*) p%pos(1),';',p%pos(2) ! save final position
          
-      else if (atan(v(1)/(-v(2)))>=n) then ! angle=arctan(x/-y), reaches the end of filter
-         s=.FALSE.
-         write(*,*) 'Particle hit the end of the electric filter.'
-         write(10,*) p%pos(1),';',p%pos(2) ! save final position
-      end if
-   end do
-   close(unit=10)
-   
+      !else if (atan(v(1)/(-v(2)))>=n) then ! angle=arctan(x/-y), reaches the end of filter
+         !s=.FALSE.
+         !write(*,*) 'Particle hit the end of the electric filter.'
+         !write(10,*) p%pos(1),';',p%pos(2) ! save final position
+      !end if
+   !end do
+   !close(unit=10)
+   !---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+   ! PART 4 -------------------------------------------------------------------------------------------------------------------------------------------------------
+   ! set initial values for magnet
+    p%pos = [1.5,0.,0.] ! we strat from the top of magnet (look task description)
+    p%v = [0.,-sqrt(2*1.9226119608e-12/p%m),0.] ! assuming K=12MeV
+    p%a = [0.,0.,0.] !assuming no initial acceleration
+    
+    ! set initial E and B vectors
+    E = [0.0,0.0,0.0] ! we start outside electric filter
+    B = B_value*[0,0,1]
+
+    ! set other variables
+    n=0.523598776 ! 30 deg
+    v=([0.0,-2.7,0.0]-p%pos)
+    
+    !p%m=2.32530757E-26 !max
+    !p%m=2.32528169E-26 !min
+
+    !p%m=2.62530757E-26 !too large
+    !p%m=2.31528169E-26 !too small
+
+    !do while (ms)
+        open(unit=1,file="full_simulation1.dat",status="replace") ! now it is set to original m value
+        do while (s)
+            write(1,*) p%pos(1),';',p%pos(2) ! save data
+            call step(p,E,B)
+
+            ! MAGNET
+            if (p%pos(1)>0) then 
+                E=[0.0,0.0,0.0]
+                B = B_value*[0,0,1]
+
+                if (norm2(p%pos)<=1.45 .or. norm2(p%pos)>=1.55) then
+                    print *,"Particle hit the magnet wall"
+                    s=.FALSE.
+                    write(1,*) p%pos(1),';',p%pos(2) ! save final position
+                    !ms=.FALSE.
+                    !m_min=p%m
+                    !m_max=p%m
+                end if
+            
+            ! BETWEEN MAGNET AND ELECTRIC FILTER
+            else if (p%pos(1)==0) then
+                B = B_value*[0,0,1]
+                v=([0.0,-2.7,0.0]-p%pos)
+                E = E_value*v/(sqrt(sum(v)**2))
+
+            ! ELECTRIC FILTER
+            else if (p%pos(1)<0) then
+                B=[0.0,0.0,0.0]
+                v=([0.0,-2.7,0.0]-p%pos) ! change of vector
+                E = E_value*v/(sqrt(sum(v)**2)) ! change of electric field depending on vector
+            
+                if (norm2(v)>=1.21 .or. norm2(v)<=1.19 .or. atan(v(1)/(-v(2)))<0) then ! hits the walls
+                    s=.FALSE.
+                    write(*,*) 'Particle hit the electric filter wall.'
+                    write(1,*) p%pos(1),';',p%pos(2) ! save final position
+                    !ms=.FALSE.
+                    !m_min=p%m
+                    !m_max=p%m
+                    
+                else if (atan(v(1)/(-v(2)))>=n) then ! angle=arctan(x/-y), reaches the end of filter
+                    s=.FALSE.
+                    write(*,*) 'Success! Particle hit the end of the electric filter.'
+                    write(1,*) p%pos(1),';',p%pos(2) ! save final position
+                    !p%m=p%m-0.000001e-26
+                    !p%m=p%m+0.000001e-26
+                end if
+            end if
+        end do
+        !s=.TRUE.
+        close(1)
+    !end do
+
+    !write(*,*) m_min
+    !write(*,*) m_max
+    !--------------------------------------------------------------------------------------------------------------------------------------------------------------
 end program main
