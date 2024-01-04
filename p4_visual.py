@@ -25,7 +25,7 @@ y03=-np.tan(np.deg2rad(60))*x03-2.7
 # FIRST VALUE m=2.325294627e-26 (PARTS 2 AND 3)
 x1=[]
 y1=[]
-with open('full_simulation1.dat','r') as file:
+with open('full_simulation_1.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
         x1.append(float(values[0]))
