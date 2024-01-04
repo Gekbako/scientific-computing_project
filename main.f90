@@ -172,7 +172,7 @@ program main
     !p%m=2.31528169E-26 !too small
 
     !do while (right_mass) ! this loop is used to find the min and max mass
-        open(unit=1,file="full_simulation1.dat",status="replace") ! collecting data into files
+        open(unit=1,file="full_simulation_1.dat",status="replace") ! collecting data into files
         do while (right_path)
             write(1,*) p%pos(1),';',p%pos(2) ! save position data
             call step(p,E,B)
