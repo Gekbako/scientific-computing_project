@@ -1,4 +1,5 @@
 program main
+   ! this program simulates the motion of the charged particle in the accelerator mass spectrometer
    use particle
    implicit none
 
