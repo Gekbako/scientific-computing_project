@@ -1,7 +1,8 @@
+# import modules
 import matplotlib.pyplot as plt
 import numpy as np
 
-# walls
+# electric filter walls
 R1=1.21
 R2=1.19
 theta=np.linspace(-30,0)
@@ -10,11 +11,11 @@ y01=R1*np.cos(np.deg2rad(theta))-2.7
 x02=R2*np.sin(np.deg2rad(theta))
 y02=R2*np.cos(np.deg2rad(theta))-2.7
 
-
-
-# too low
+# too low E -------------------------------
 x1=[]
 y1=[]
+
+# read data
 with open('data1.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
@@ -22,15 +23,18 @@ with open('data1.dat','r') as file:
         y1.append(float(values[1]))
 file.close()
 
+# plots
 plt.figure()
-plt.plot(x1,y1)
-plt.plot(x01,y01,color='black')
-plt.plot(x02,y02,color='black')
+plt.plot(x1,y1) # trajectory
+plt.plot(x01,y01,color='black') # wall
+plt.plot(x02,y02,color='black') # wall
 plt.show()
 
-# good
+# accurate E ------------------------------
 x2=[]
 y2=[]
+
+# read data
 with open('data2.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
@@ -38,15 +42,18 @@ with open('data2.dat','r') as file:
         y2.append(float(values[1]))
 file.close()
 
+# plots
 plt.figure()
-plt.plot(x2,y2)
-plt.plot(x01,y01,color='black')
-plt.plot(x02,y02,color='black')
+plt.plot(x2,y2) # trajectory
+plt.plot(x01,y01,color='black') # wall
+plt.plot(x02,y02,color='black') # wall
 plt.show()
 
-# too high
+# too high E ------------------------------
 x3=[]
 y3=[]
+
+# read data
 with open('data3.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
@@ -54,8 +61,9 @@ with open('data3.dat','r') as file:
         y3.append(float(values[1]))
 file.close()
 
+# plots
 plt.figure()
-plt.plot(x3,y3)
-plt.plot(x01,y01,color='black')
-plt.plot(x02,y02,color='black')
+plt.plot(x3,y3) # trajectory
+plt.plot(x01,y01,color='black') # wall
+plt.plot(x02,y02,color='black') # wall
 plt.show()
