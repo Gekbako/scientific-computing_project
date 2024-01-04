@@ -16,7 +16,7 @@ x1=[]
 y1=[]
 
 # read data
-with open('data1.dat','r') as file:
+with open('data_too_low_E.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
         x1.append(float(values[0]))
@@ -35,7 +35,7 @@ x2=[]
 y2=[]
 
 # read data
-with open('data2.dat','r') as file:
+with open('data_accurate_E.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
         x2.append(float(values[0]))
@@ -54,7 +54,7 @@ x3=[]
 y3=[]
 
 # read data
-with open('data3.dat','r') as file:
+with open('data_too_high_E.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
         x3.append(float(values[0]))
