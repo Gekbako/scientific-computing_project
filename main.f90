@@ -19,7 +19,7 @@ program main
    close(unit=10)
 
    ! change strings to real numbers
-   read(values(1)(5:),*) E_value !theoretical ideal for E is 0.4147408125
+   read(values(1)(5:),*) E_value !theoretical ideal for E is 5367499.0862869
    read(values(2)(5:),*) B_value !theoretical ideal for B is 0.4147408125
    read(values(3)(5:),*) p%m
    read(values(4)(5:),*) p%q
