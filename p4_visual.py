@@ -1,3 +1,4 @@
+# import modules
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -11,7 +12,7 @@ f=0*e
 g=np.linspace(0,1.55,1000)
 h=0*g
 
-# walls - filter
+# walls - electric filter
 R1=1.21
 R2=1.19
 theta=np.linspace(-30,0)
@@ -25,6 +26,8 @@ y03=-np.tan(np.deg2rad(60))*x03-2.7
 # FIRST VALUE m=2.325294627e-26 (PARTS 2 AND 3)
 x1=[]
 y1=[]
+
+# read data
 with open('full_simulation_1.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
@@ -48,13 +51,15 @@ plt.plot(x01,y01,color='black',linewidth=0.5)
 plt.plot(x02,y02,color='black',linewidth=0.5)
 plt.plot(x03,y03,color='black',linewidth=0.5)
 
-plt.gca().set_aspect('equal', adjustable='box')
+plt.gca().set_aspect('equal', adjustable='box') # square graph
 plt.title(r'Mass of particle $^\text{14}$C$^\text{3+}$ m=2.325294627$\cdot10^\text{-26}$')
 plt.show()
 
 # MAX VALUE m=2.32530757E-26
 x1=[]
 y1=[]
+
+# read data
 with open('full_simulation_max.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
@@ -78,13 +83,15 @@ plt.plot(x01,y01,color='black',linewidth=0.5)
 plt.plot(x02,y02,color='black',linewidth=0.5)
 plt.plot(x03,y03,color='black',linewidth=0.5)
 
-plt.gca().set_aspect('equal', adjustable='box')
+plt.gca().set_aspect('equal', adjustable='box') # square graph
 plt.title(r'Maximum mass m=2.32530757$\cdot10^\text{-26}$')
 plt.show()
 
 # MIN VALUE m=2.32528169E-26
 x1=[]
 y1=[]
+
+# read data
 with open('full_simulation_min.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
@@ -108,13 +115,15 @@ plt.plot(x01,y01,color='black',linewidth=0.5)
 plt.plot(x02,y02,color='black',linewidth=0.5)
 plt.plot(x03,y03,color='black',linewidth=0.5)
 
-plt.gca().set_aspect('equal', adjustable='box')
+plt.gca().set_aspect('equal', adjustable='box') # square graph
 plt.title(r'Minimum mass m=2.32528169$\cdot10^\text{-26}$')
 plt.show()
 
 # TOO LARGE MASS m=2.62530757E-26
 x1=[]
 y1=[]
+
+# read data
 with open('full_simulation_2.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
@@ -138,13 +147,15 @@ plt.plot(x01,y01,color='black',linewidth=0.5)
 plt.plot(x02,y02,color='black',linewidth=0.5)
 plt.plot(x03,y03,color='black',linewidth=0.5)
 
-plt.gca().set_aspect('equal', adjustable='box')
+plt.gca().set_aspect('equal', adjustable='box') # square graph
 plt.title(r'Too large mass m=2.62530757$\cdot10^\text{-26}$')
 plt.show()
 
 # TOO SMALL m=2.31528169E-26
 x1=[]
 y1=[]
+
+# read data
 with open('full_simulation_3.dat','r') as file:
     for line in file:
         values=line.strip().split(';')
@@ -168,6 +179,6 @@ plt.plot(x01,y01,color='black',linewidth=0.5)
 plt.plot(x02,y02,color='black',linewidth=0.5)
 plt.plot(x03,y03,color='black',linewidth=0.5)
 
-plt.gca().set_aspect('equal', adjustable='box')
+plt.gca().set_aspect('equal', adjustable='box') # square graph
 plt.title(r'Too small mass m=2.31528169$\cdot10^\text{-26}$')
 plt.show()
