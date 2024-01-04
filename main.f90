@@ -129,7 +129,7 @@ program main
    !v=([0.0,-2.7,0.0]-p%pos) ! vector from position to the centre of the curvature
 
    ! time step and saving the data
-   !open(unit=10, file='data2.dat', status='replace', action='write')
+   !open(unit=10, file='data_accurate_E.dat', status='replace', action='write')
    !do while (right_path)
       !write(10,*) p%pos(1),';',p%pos(2) ! save data
       !call step(p,E,B) 
