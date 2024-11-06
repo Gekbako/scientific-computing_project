@@ -1,9 +1,9 @@
 module particle
    implicit none
    type :: par
-      real :: q,m,f(3),pos(3),v(3),a(3) ! charge, mass, force exerted, position, velocity, acceleration 
+      real :: q,m,f(3),pos(3),v(3),a(3) ! charge, mass, force exerted, position, velocity, acceleration
    end type par
-   
+
 contains
 
    ! cross product of two 3D vectors - function
